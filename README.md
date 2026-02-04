@@ -28,7 +28,7 @@ macNetty simplifies network management for macOS users by providing an elegant c
 
 1. **Download macNetty:**
    ```bash
-   curl -O https://raw.githubusercontent.com/yourusername/macNetty/main/macNetty.sh
+   curl -O https://raw.githubusercontent.com/lakminagamage/macNetty/main/macNetty.sh
    chmod +x macNetty.sh
    ```
 
