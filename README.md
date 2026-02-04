@@ -28,13 +28,13 @@ macNetty simplifies network management for macOS users by providing an elegant c
 
 1. **Download macNetty:**
    ```bash
-   curl -O https://raw.githubusercontent.com/yourusername/macNetty/main/macNetty
-   chmod +x macNetty
+   curl -O https://raw.githubusercontent.com/yourusername/macNetty/main/macNetty.sh
+   chmod +x macNetty.sh
    ```
 
 2. **Run the wizard:**
    ```bash
-   sudo ./macNetty
+   sudo ./macNetty.sh
    ```
 
 That's it! No compilation, no dependencies, no package managers.
@@ -175,8 +175,8 @@ This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Inspired by the need for simpler network management
-- Uses only native macOS tools and Bash
+The Wi-Fi network based automation tool is inspired by [eprev's locationchanger script](https://github.com/eprev/locationchanger). Thanks for your contribution!
+
 
 ## 📬 Support
 
@@ -187,5 +187,6 @@ If you find macNetty useful, please:
 - 📢 Share with others who might benefit
 
 ---
+
 
 **Made with ❤️ for Mac users who love the terminal**
