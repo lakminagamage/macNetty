@@ -96,7 +96,7 @@ The monitor script uses `ipconfig getsummary en0` for Apple Silicon compatibilit
 ### Configure Static IP for Office Network
 
 ```bash
-sudo ./macNetty
+sudo ./macNetty.sh
 # Select [1] Create New Network Profile
 # Enter SSID: OfficeWiFi
 # Static IP? y
@@ -109,7 +109,7 @@ sudo ./macNetty
 ### Setup Auto-Switching
 
 ```bash
-sudo ./macNetty
+sudo ./macNetty.sh
 # First, create profiles for each network (option 1)
 # Then select [2] Install Auto-Switcher
 # Done! Your Mac will now auto-switch
@@ -134,7 +134,7 @@ tail -f /tmp/wifichanger.log
 
 Make sure you're running with `sudo`:
 ```bash
-sudo ./macNetty
+sudo ./macNetty.sh
 ```
 
 ### Network not switching?
