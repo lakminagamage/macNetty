@@ -262,7 +262,63 @@ create_network_profile() {
 }
 
 ################################################################################
-# Feature 2: Install Auto-Switcher
+# Feature 2: Delete Network Profile
+################################################################################
+
+delete_network_profile() {
+    echo -e "\n${BOLD}${MAGENTA}══════════════════════════════════════════${RESET}"
+    echo -e "${BOLD}${MAGENTA}   DELETE NETWORK PROFILE${RESET}"
+    echo -e "${BOLD}${MAGENTA}══════════════════════════════════════════${RESET}\n"
+    
+    # Get list of existing locations
+    local locations
+    locations=$(networksetup -listlocations)
+    
+    if [[ -z "$locations" ]]; then
+        print_error "No network profiles found!"
+        return
+    fi
+    
+    # Display available profiles
+    echo -e "${CYAN}Available Network Profiles:${RESET}\n"
+    echo "$locations" | nl -w2 -s'. '
+    echo ""
+    
+    # Get user selection
+    local profile_name
+    profile_name=$(get_user_input "Enter the profile name to delete")
+    
+    if [[ -z "$profile_name" ]]; then
+        print_error "Profile name cannot be empty!"
+        return
+    fi
+    
+    # Verify profile exists
+    if ! echo "$locations" | grep -q "^${profile_name}$"; then
+        print_error "Profile '$profile_name' not found!"
+        return
+    fi
+    
+    # Confirm deletion
+    print_warning "You are about to delete the profile: $profile_name"
+    if ! get_yes_no "Are you sure you want to delete this profile?" "N"; then
+        print_info "Deletion cancelled."
+        return
+    fi
+    
+    # Delete the location
+    if networksetup -deletelocation "$profile_name" 2>/dev/null; then
+        echo -e "\n${GREEN}${BOLD}╔════════════════════════════════════════╗"
+        echo -e "║   Profile Deleted Successfully! ✓      ║"
+        echo -e "╚════════════════════════════════════════╝${RESET}\n"
+        print_success "Profile '$profile_name' has been removed"
+    else
+        print_error "Failed to delete profile '$profile_name'"
+    fi
+}
+
+################################################################################
+# Feature 3: Install Auto-Switcher
 ################################################################################
 
 install_auto_switcher() {
@@ -377,27 +433,31 @@ show_menu() {
         echo -e "${BOLD}${CYAN}════════════════════════════════════════${RESET}\n"
         
         echo -e "${YELLOW}[1]${RESET} Create New Network Profile"
-        echo -e "${YELLOW}[2]${RESET} Install Auto-Switcher (Set & Forget)"
-        echo -e "${YELLOW}[3]${RESET} Exit"
+        echo -e "${YELLOW}[2]${RESET} Delete Network Profile"
+        echo -e "${YELLOW}[3]${RESET} Install Auto-Switcher (Set & Forget)"
+        echo -e "${YELLOW}[4]${RESET} Exit"
         echo ""
         
         local choice
-        choice=$(get_user_input "Select an option [1-3]")
+        choice=$(get_user_input "Select an option [1-4]")
         
         case "$choice" in
             1)
                 create_network_profile
                 ;;
             2)
-                install_auto_switcher
+                delete_network_profile
                 ;;
             3)
+                install_auto_switcher
+                ;;
+            4)
                 echo -e "\n${CYAN}Thank you for using macNetty!${RESET}"
                 echo -e "${CYAN}Goodbye! 👋${RESET}\n"
                 exit 0
                 ;;
             *)
-                print_warning "Invalid option. Please select 1, 2, or 3."
+                print_warning "Invalid option. Please select 1, 2, 3, or 4."
                 ;;
         esac
     done
