@@ -11,6 +11,7 @@ macNetty simplifies network management for macOS users by providing an elegant c
 ## ✨ Features
 - 🔧 **Network Profile Management** - Create location-based profiles for different Wi-Fi networks
 - 📡 **Static IP Configuration** - Set custom IP addresses, gateways, and subnet masks
+- 🌐 **DNS Server Configuration** - Set custom DNS servers (Google DNS, Cloudflare, OpenDNS, etc.)
 - 🔐 **Proxy Support** - Configure HTTP/HTTPS proxies per network location
 - 🔄 **Auto-Switching** - Automatically switch network profiles when connecting to different Wi-Fi networks
 - 🍏 **Apple Silicon Compatible** - Uses `ipconfig` for M1/M2/M3 Mac compatibility
@@ -60,8 +61,11 @@ Create a custom network configuration for a specific Wi-Fi network:
    - Enter IP Address, Gateway, and Subnet Mask
 3. Choose whether to configure a Proxy (optional)
    - Enter Proxy Host and Port
+4. Choose whether to set custom DNS servers (optional)
+   - Enter Primary DNS (e.g., 8.8.8.8 for Google DNS)
+   - Enter Secondary DNS (optional, e.g., 8.8.4.4)
 
-**Example Use Case:** Configure your office Wi-Fi with a static IP and proxy, while your home Wi-Fi uses DHCP.
+**Example Use Case:** Configure your office Wi-Fi with a static IP, custom DNS, and proxy, while your home Wi-Fi uses DHCP.
 
 ### Option 2: Install Auto-Switcher
 
@@ -104,7 +108,28 @@ sudo ./macNetty.sh
 # Gateway: 192.168.10.1
 # Subnet: 255.255.255.0
 # Proxy? n
+# Custom DNS? n
 ```
+
+### Configure Home Network with Custom DNS
+
+```bash
+sudo ./macNetty.sh
+# Select [1] Create New Network Profile
+# Enter SSID: HomeWiFi
+# Static IP? n
+# Proxy? n
+# Custom DNS? y
+# Primary DNS: 8.8.8.8          # Google DNS
+# Secondary DNS: 8.8.4.4        # Google DNS backup
+```
+
+### Popular DNS Providers
+
+- **Google Public DNS:** 8.8.8.8 / 8.8.4.4
+- **Cloudflare DNS:** 1.1.1.1 / 1.0.0.1
+- **OpenDNS:** 208.67.222.222 / 208.67.220.220
+- **Quad9:** 9.9.9.9 / 149.112.112.112
 
 ### Setup Auto-Switching
 
@@ -161,12 +186,13 @@ Contributions are welcome! Here's how you can help:
 
 ### Ideas for Contributions
 
-- DNS server configuration
 - IPv6 support
 - VPN integration
 - Export/import profiles
+- Network quality testing (ping, speed test)
 - GUI wrapper
 - Homebrew formula
+- Bluetooth network configuration
 
 ## 📄 License
 

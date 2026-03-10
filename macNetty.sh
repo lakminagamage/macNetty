@@ -220,6 +220,38 @@ create_network_profile() {
         fi
     fi
     
+    # Configure DNS if needed
+    if get_yes_no "Do you want to set custom DNS servers?" "N"; then
+        echo -e "\n${CYAN}DNS Configuration:${RESET}"
+        
+        local dns_primary dns_secondary dns_servers
+        dns_primary=$(get_user_input "Enter Primary DNS (e.g., 8.8.8.8)")
+        dns_secondary=$(get_user_input "Enter Secondary DNS (optional, e.g., 8.8.4.4)")
+        
+        if [[ -n "$dns_primary" ]]; then
+            print_info "Applying DNS configuration..."
+            
+            if [[ -n "$dns_secondary" ]]; then
+                dns_servers="$dns_primary $dns_secondary"
+            else
+                dns_servers="$dns_primary"
+            fi
+            
+            if networksetup -setdnsservers "$service_name" $dns_servers 2>/dev/null; then
+                if [[ -n "$dns_secondary" ]]; then
+                    print_success "DNS configured: $dns_primary, $dns_secondary"
+                else
+                    print_success "DNS configured: $dns_primary"
+                fi
+            else
+                print_error "Failed to set DNS servers"
+            fi
+        fi
+    else
+        networksetup -setdnsservers "$service_name" "Empty" 2>/dev/null
+        print_success "Using automatic DNS (from DHCP)"
+    fi
+    
     show_progress "Finalizing configuration" 1
     
     echo -e "\n${GREEN}${BOLD}╔════════════════════════════════════════╗"
