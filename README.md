@@ -9,11 +9,12 @@ macNetty simplifies network management for macOS users by providing an elegant c
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## ✨ Features
-- 🔧 **Network Profile Management** - Create location-based profiles for different Wi-Fi networks
+- 🔧 **Network Profile Management** - Create and delete location-based profiles for different Wi-Fi networks
 - 📡 **Static IP Configuration** - Set custom IP addresses, gateways, and subnet masks
 - 🌐 **DNS Server Configuration** - Set custom DNS servers (Google DNS, Cloudflare, OpenDNS, etc.)
 - 🔐 **Proxy Support** - Configure HTTP/HTTPS proxies per network location
 - 🔄 **Auto-Switching** - Automatically switch network profiles when connecting to different Wi-Fi networks
+- 🗑️ **Easy Profile Deletion** - Remove unwanted network profiles with confirmation prompts
 - 🍏 **Apple Silicon Compatible** - Uses `ipconfig` for M1/M2/M3 Mac compatibility
 - 🚫 **Zero Dependencies** - Pure Bash - no Python, Node.js, or external libraries required
 - 🎨 **Beautiful CLI Interface** - Color-coded output with ASCII art for a modern terminal experience
@@ -44,12 +45,13 @@ That's it! No compilation, no dependencies, no package managers.
 
 ### Main Menu Options
 
-When you run macNetty, you'll see three options:
+When you run macNetty, you'll see four options:
 
 ```
 [1] Create New Network Profile
-[2] Install Auto-Switcher (Set & Forget)
-[3] Exit
+[2] Delete Network Profile
+[3] Install Auto-Switcher (Set & Forget)
+[4] Exit
 ```
 
 ### Option 1: Create New Network Profile
@@ -67,7 +69,24 @@ Create a custom network configuration for a specific Wi-Fi network:
 
 **Example Use Case:** Configure your office Wi-Fi with a static IP, custom DNS, and proxy, while your home Wi-Fi uses DHCP.
 
-### Option 2: Install Auto-Switcher
+### Option 2: Delete Network Profile
+
+Remove an existing network profile:
+
+1. Select option [2] from the main menu
+2. View the list of all available network profiles
+3. Enter the exact name of the profile you want to delete
+4. Confirm deletion when prompted
+
+**Safety Features:**
+- Lists all profiles before deletion
+- Requires exact profile name match
+- Asks for confirmation before removing
+- Shows clear success/error messages
+
+**Example Use Case:** Remove old network profiles for Wi-Fi networks you no longer use, such as previous workplace networks or temporary hotspots.
+
+### Option 3: Install Auto-Switcher
 
 Set up automatic network profile switching:
 
@@ -131,12 +150,23 @@ sudo ./macNetty.sh
 - **OpenDNS:** 208.67.222.222 / 208.67.220.220
 - **Quad9:** 9.9.9.9 / 149.112.112.112
 
+### Delete Old Network Profile
+
+```bash
+sudo ./macNetty.sh
+# Select [2] Delete Network Profile
+# View the list of profiles
+# Enter profile name: OldOfficeWiFi
+# Confirm deletion: y
+# Profile deleted!
+```
+
 ### Setup Auto-Switching
 
 ```bash
 sudo ./macNetty.sh
 # First, create profiles for each network (option 1)
-# Then select [2] Install Auto-Switcher
+# Then select [3] Install Auto-Switcher
 # Done! Your Mac will now auto-switch
 ```
 
